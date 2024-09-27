@@ -179,4 +179,13 @@ const accountManage = [
   }),
 ];
 
-export { authUser, registerUser, accountManage };
+/**
+ * @desc    Logout user
+ * @route   POST /api/users/logout
+ * @access  Private
+ */
+const logoutUser = asyncHandler(async (req, res) => {
+  res.status(200).json({ message: "User logged out successfully" });
+});
+
+export { authUser, registerUser, accountManage, logoutUser };

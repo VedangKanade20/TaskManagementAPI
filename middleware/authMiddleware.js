@@ -34,7 +34,7 @@ const admin = (req, res, next) => {
   }
 };
 
-export const userOnly = (req, res, next) => {
+ const userOnly = (req, res, next) => {
   // Check if the user is authenticated and not an admin
   if (req.user && !req.user.isAdmin) {
     next(); // Proceed to the next middleware or route handler

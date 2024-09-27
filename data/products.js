@@ -7,8 +7,8 @@ const products = [
     quantity: 25,
     status: "approved", // Product approved
     images: [
-      "https://example.com/images/headphones1.jpg",
-      "https://example.com/images/headphones2.jpg",
+      "https://images.pexels.com/photos/610945/pexels-photo-610945.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/3945667/pexels-photo-3945667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     ],
     owner: "651a1b76f57c1e67b3f8e2b1", // User who uploaded this product
     reviews: [
@@ -29,8 +29,8 @@ const products = [
     quantity: 40,
     status: "approved", // Product approved
     images: [
-      "https://example.com/images/smartwatch1.jpg",
-      "https://example.com/images/smartwatch2.jpg",
+      "https://images.pexels.com/photos/437038/pexels-photo-437038.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+      "hhttps://images.pexels.com/photos/2861929/pexels-photo-2861929.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     ],
     owner: "651a1b76f57c1e67b3f8e2b2", // Another user who uploaded this product
     reviews: [
@@ -51,8 +51,8 @@ const products = [
     quantity: 10,
     status: "rejected", // Product rejected
     images: [
-      "https://example.com/images/tv1.jpg",
-      "https://example.com/images/tv2.jpg",
+      "https://images.pexels.com/photos/5202925/pexels-photo-5202925.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/1682519/pexels-photo-1682519.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
     ],
     owner: "651a1b76f57c1e67b3f8e2b3", // Product owner's ID
     reviews: [
@@ -66,15 +66,15 @@ const products = [
     published: false, // Product is not published since it was rejected
   },
   {
-    name: "Gaming Laptop",
+    name: "Smooth Laptop",
     description:
       "A powerful gaming laptop with an Intel i7 processor, 16GB RAM, and a dedicated NVIDIA graphics card.",
     price: 70000,
     quantity: 15,
     status: "approved", // Product approved
     images: [
-      "https://example.com/images/laptop1.jpg",
-      "https://example.com/images/laptop2.jpg",
+      "https://images.pexels.com/photos/5412270/pexels-photo-5412270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      "https://images.pexels.com/photos/3184463/pexels-photo-3184463.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
     ],
     owner: "651a1b76f57c1e67b3f8e2b4", // Owner's ID
     reviews: [

@@ -1,39 +1,55 @@
 import asyncHandler from "express-async-handler";
-
+import AWS from "aws-sdk"; // Import AWS SDK for S3
 import Product from "../models/productModel.js";
+import User from "../models/userModel.js";
+
+// Configure AWS S3
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
 
 /**
- * @desc		Create a product
+ * @desc		Create a product with images
  * @route		POST /api/products/
  * @access	private/users
  */
-const createProduct = asyncHandler(async (req, res) => {
-  const { name, description, price, quantity, ownerId } = req.body;
+const uploadImageAndCreateProduct = asyncHandler(async (req, res) => {
+  const { name, description, price, quantity } = req.body;
+  const images = [];
 
-  const owner = await User.findById(ownerId);
-  if (!owner) {
-    return res.status(404).json({ message: "User not found" });
+  // Upload images to S3
+  if (req.files && req.files.length > 0) {
+    for (const file of req.files) {
+      const params = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `products/${Date.now()}_${file.originalname}`,
+        Body: file.buffer,
+        ACL: "public-read",
+      };
+
+      const uploadResult = await s3.upload(params).promise();
+      images.push(uploadResult.Location); // Store the image URL
+    }
   }
 
-  // Check if the user is an admin
-  if (owner.isAdmin) {
-    return res
-      .status(403)
-      .json({ message: "Admins are not allowed to post products" });
-  }
-  const product = await Product.create({
+  // Create product
+  const product = new Product({
     name,
     description,
     price,
     quantity,
-    owner: owner._id,
+    images,
+    owner: req.user._id, // Assuming you have user info in req.user
   });
 
-  res.status(201).json(product);
+  const createdProduct = await product.save();
+  res.status(201).json(createdProduct);
 });
 
 /**
- * @desc		Create a product
+ * @desc		Get products on admin dashboard
  * @route		GET /api/products/admin/onAdminDashboard
  * @access	private/users
  */
@@ -89,7 +105,7 @@ const updateProductStatus = asyncHandler(async (req, res) => {
   }
 
   if (action === "approve") {
-    //  approved and published
+    // approved and published
     product.status = "approved";
     product.isPublished = true;
     await product.save();
@@ -112,9 +128,6 @@ const updateProductStatus = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Invalid action" });
   }
 });
-
-import asyncHandler from "express-async-handler";
-import Product from "../models/productModel.js";
 
 /**
  * @desc      Publish a product
@@ -160,10 +173,10 @@ const getPublishedProducts = asyncHandler(async (req, res) => {
 });
 
 export {
-  createProduct,
   addReview,
   updateProductStatus,
   getProductsOnAdminDashboard,
   publishProduct,
   getPublishedProducts,
+  uploadImageAndCreateProduct,
 };
