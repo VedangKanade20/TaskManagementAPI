@@ -34,4 +34,14 @@ const admin = (req, res, next) => {
   }
 };
 
-export { admin, protect };
+export const userOnly = (req, res, next) => {
+  // Check if the user is authenticated and not an admin
+  if (req.user && !req.user.isAdmin) {
+    next(); // Proceed to the next middleware or route handler
+  } else {
+    res.status(403); // Forbidden
+    throw new Error("Access denied. This route is for regular users only.");
+  }
+};
+
+export { admin, protect, userOnly };

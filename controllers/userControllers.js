@@ -51,6 +51,7 @@ const authUser = [
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
       });
+      res.status(200, "Logged in successfully");
     } else {
       res.status(401);
       throw new Error("Invalid email or password.");
@@ -105,6 +106,7 @@ const registerUser = [
         isAdmin: user.isAdmin,
         token: generateToken(user._id),
       });
+      res.message(200, "Registered successfully");
     } else {
       res.status(400);
       throw new Error("Invalid user data");
@@ -173,6 +175,7 @@ const accountManage = [
       email: user.email,
       isAdmin: user.isAdmin,
     });
+    res.status(200, "Updated");
   }),
 ];
 

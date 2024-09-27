@@ -4,14 +4,14 @@ import {
   authUser,
   registerUser,
 } from "../controllers/userControllers.js";
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, userOnly } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.route("/login").post(authUser);
 router.route("/register").post(registerUser);
 router
-  .route("/home/manageAcc")
+  .route("/manageacc")
   .post(protect, accountManage)
   .get(protect, accountManage);
 

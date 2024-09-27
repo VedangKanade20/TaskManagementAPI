@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 
 const reviewSchema = Schema({
@@ -50,9 +51,17 @@ const productSchema = Schema({
     type: [String],
   },
   owner: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User", // ref to User model (only users can)
     required: true,
   },
+  published: {
+    type: Boolean,
+    default: false, // Products are not published by default
+  },
   reviews: [reviewSchema],
 });
+
+const Product = mongoose.model("Product", productSchema);
+
+export default Product;
