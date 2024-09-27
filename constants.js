@@ -1,1 +1,1 @@
-export const DB_NAME = "productManagement"
+export const DB_NAME = "taskManagement";

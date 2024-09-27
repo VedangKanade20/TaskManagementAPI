@@ -1,19 +1,31 @@
+import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-import { app } from "./app.js";
 import connectDB from "./db/db.js";
+import userRoutes from "./routes/userRoutes.js";
 
-dotenv.config({
-  path: "./.env",
-});
+dotenv.config();
 
 const PORT = process.env.PORT || 6001;
 
-connectDB()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+connectDB();
+
+const app = express();
+app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("API IS RUNNING");
+});
+
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    credentials: true,
   })
-  .catch((err) => {
-    console.log("MongoDB error", err);
-  });
+);
+
+app.use("/api/users", userRoutes);
+
+app.listen(PORT, () => {
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+});

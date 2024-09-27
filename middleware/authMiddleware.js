@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken";
+import { check, validationResult } from "express-validator";
 
 import User from "../models/userModel.js";
 
